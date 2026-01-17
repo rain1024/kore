@@ -1,0 +1,12 @@
+[project]
+name = "kore-tools"
+version = "0.1.0"
+description = "Tools for Kore language development"
+requires-python = ">=3.10"
+
+[project.scripts]
+gemini-prompt = "kore_tools.gemini:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

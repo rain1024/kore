@@ -1,0 +1,5 @@
+object CAT
+
+animate CAT.go
+
+save cat.gif

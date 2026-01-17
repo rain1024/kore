@@ -1,0 +1,19 @@
+mindmap Git
+  Basics
+    Init/Clone
+    Add/Commit
+    Status/Log
+  Branching
+    Create Branch
+    Merge
+    Rebase
+  Remote
+    Push/Pull
+    Fetch
+    Origin
+  Collaboration
+    Pull Requests
+    Code Review
+    Conflicts
+
+show

@@ -1,0 +1,5 @@
+object DOG
+
+animate DOG.go
+
+save dog.gif

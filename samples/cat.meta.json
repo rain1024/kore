@@ -1,0 +1,12 @@
+{
+  "name": "CAT",
+  "description": "Cat Movement Animation",
+  "source": "https://lottiefiles.com/free-animation/cat-movement-J2Rpkvoh5J",
+  "author": "Abdul Latif",
+  "license": "Lottie Simple License",
+  "size": "2.5 KB",
+  "likes": 939,
+  "actions": {
+    "go": "Cat walking/moving animation"
+  }
+}

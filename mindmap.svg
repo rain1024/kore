@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <style>
+    text { user-select: none; }
+  </style>
+  <rect width="100%" height="100%" fill="#1a1a2e"/>
+  <g>
+<path d="M 432.0 300.0 C 452.0 300.0, 452.0 252.0, 472.0 252.0" stroke="#10B981" stroke-width="2" fill="none" opacity="0.6"/>
+<path d="M 544.0 252.0 C 564.0 252.0, 564.0 228.0, 584.0 228.0" stroke="#F59E0B" stroke-width="2" fill="none" opacity="0.6"/>
+<path d="M 544.0 252.0 C 564.0 252.0, 564.0 276.0, 584.0 276.0" stroke="#F59E0B" stroke-width="2" fill="none" opacity="0.6"/>
+<path d="M 368.0 300.0 C 348.0 300.0, 348.0 300.0, 328.0 300.0" stroke="#10B981" stroke-width="2" fill="none" opacity="0.6"/>
+<path d="M 232.0 300.0 C 212.0 300.0, 212.0 276.0, 192.0 276.0" stroke="#F59E0B" stroke-width="2" fill="none" opacity="0.6"/>
+<path d="M 232.0 300.0 C 212.0 300.0, 212.0 324.0, 192.0 324.0" stroke="#F59E0B" stroke-width="2" fill="none" opacity="0.6"/>
+<path d="M 432.0 300.0 C 452.0 300.0, 452.0 348.0, 472.0 348.0" stroke="#10B981" stroke-width="2" fill="none" opacity="0.6"/>
+<path d="M 592.0 348.0 C 612.0 348.0, 612.0 324.0, 632.0 324.0" stroke="#F59E0B" stroke-width="2" fill="none" opacity="0.6"/>
+<path d="M 592.0 348.0 C 612.0 348.0, 612.0 372.0, 632.0 372.0" stroke="#F59E0B" stroke-width="2" fill="none" opacity="0.6"/>
+<rect x="368.0" y="284.0" width="64" height="32" rx="6" fill="#3B82F6"/>
+<text x="400.0" y="305.0" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="500">KORE</text>
+<rect x="472.0" y="236.0" width="72" height="32" rx="6" fill="#10B981"/>
+<text x="508.0" y="257.0" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="500">IDEAS</text>
+<rect x="584.0" y="212.0" width="88" height="32" rx="6" fill="#F59E0B"/>
+<text x="628.0" y="233.0" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="500">Elegant</text>
+<rect x="584.0" y="260.0" width="80" height="32" rx="6" fill="#F59E0B"/>
+<text x="624.0" y="281.0" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="500">Visual</text>
+<rect x="232.0" y="284.0" width="96" height="32" rx="6" fill="#10B981"/>
+<text x="280.0" y="305.0" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="500">FEATURES</text>
+<rect x="88.0" y="260.0" width="104" height="32" rx="6" fill="#F59E0B"/>
+<text x="140.0" y="281.0" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="500">Animation</text>
+<rect x="104.0" y="308.0" width="88" height="32" rx="6" fill="#F59E0B"/>
+<text x="148.0" y="329.0" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="500">Diagram</text>
+<rect x="472.0" y="332.0" width="120" height="32" rx="6" fill="#10B981"/>
+<text x="532.0" y="353.0" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="500">INSPIRATION</text>
+<rect x="632.0" y="308.0" width="120" height="32" rx="6" fill="#F59E0B"/>
+<text x="692.0" y="329.0" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="500">Bret Victor</text>
+<rect x="632.0" y="356.0" width="72" height="32" rx="6" fill="#F59E0B"/>
+<text x="668.0" y="377.0" text-anchor="middle" fill="white" font-family="system-ui, sans-serif" font-size="14" font-weight="500">Tufte</text>
+  </g>
+</svg>

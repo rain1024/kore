@@ -1,0 +1,58 @@
+# How Agentic AI Works
+# Layered architecture diagram
+
+architecture
+    # Layer 1: Input Sources
+    layer input(input)[Input Sources]
+    service kb(database)[Knowledge Base] in input
+    service queries(server)[User Queries] in input
+    service api(api)[API Calls] in input
+    service sensor(sensor)[Sensor Data] in input
+    service logs(logs)[System Logs] in input
+    service scraping(globe)[Web Scraping] in input
+
+    # Layer 2: AI Processing
+    layer process(process)[AI Processing]
+    service analysis(search)[Query Analysis] in process
+    service reasoning(brain)[Reasoning] in process
+    service memory(database)[Memory Retrieval] in process
+    service planning(gear)[Planning] in process
+    service tools(tools)[Tool Selection] in process
+    service context(server)[Context Management] in process
+
+    # Layer 3: Action Layer
+    layer action(action)[Action Layer]
+    service decision(gear)[Decision Making] in action
+    service execution(server)[Task Execution] in action
+    service collab(brain)[Agent Collaboration] in action
+    service errorh(error)[Error Handling] in action
+    service feedback(loop)[Feedback Loop] in action
+    service scheduling(gear)[Autonomous Scheduling] in action
+
+    # Layer 4: Output
+    layer output(output)[Output]
+    service response(lightbulb)[Response Generation] in output
+
+    # Connections: Input -> Processing
+    kb:B --> T:analysis
+    queries:B --> T:reasoning
+    api:B --> T:memory
+    sensor:B --> T:planning
+    logs:B --> T:tools
+    scraping:B --> T:context
+
+    # Connections: Processing -> Action
+    analysis:B --> T:decision
+    reasoning:B --> T:execution
+    memory:B --> T:collab
+    planning:B --> T:errorh
+    tools:B --> T:feedback
+    context:B --> T:scheduling
+
+    # Connections: Action -> Output (all converge)
+    decision:B --> T:response
+    execution:B --> T:response
+    collab:B --> T:response
+    errorh:B --> T:response
+    feedback:B --> T:response
+    scheduling:B --> T:response

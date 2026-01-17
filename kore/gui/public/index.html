@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kore</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    #titlebar {
+      height: 28px;
+      -webkit-app-region: drag;
+      flex-shrink: 0;
+    }
+    #lottie, #mindmap {
+      flex: 1;
+      min-height: 0;
+    }
+    #mindmap {
+      display: none;
+    }
+    #mindmap svg {
+      width: 100%;
+      height: 100%;
+    }
+    #cli {
+      height: 32px;
+      background: #1a1a1a;
+      border-top: 1px solid #333;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      -webkit-app-region: no-drag;
+      flex-shrink: 0;
+    }
+    #cli-prompt {
+      color: #0f0;
+      font-family: 'SF Mono', Monaco, monospace;
+      font-size: 13px;
+      margin-right: 8px;
+    }
+    #cli-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-family: 'SF Mono', Monaco, monospace;
+      font-size: 13px;
+    }
+    #cli-input::placeholder {
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div id="titlebar"></div>
+  <div id="lottie"></div>
+  <div id="mindmap"></div>
+  <div id="cli">
+    <span id="cli-prompt">&gt;</span>
+    <input type="text" id="cli-input" placeholder="animate DOG.go" autofocus>
+  </div>
+
+  <script>
+    const { ipcRenderer } = require('electron');
+
+    let anim = null;
+    let currentSpeed = 1;
+    let isLooping = true;
+
+    async function loadAnimation(name) {
+      const data = await ipcRenderer.invoke('get-animation', name);
+      if (!data) {
+        console.log('Animation not found:', name);
+        return false;
+      }
+
+      if (anim) anim.destroy();
+
+      anim = lottie.loadAnimation({
+        container: document.getElementById('lottie'),
+        renderer: 'svg',
+        loop: isLooping,
+        autoplay: true,
+        animationData: data
+      });
+      anim.setSpeed(currentSpeed);
+      return true;
+    }
+
+    let currentAnimName = null;
+
+    async function executeCommand(cmd) {
+      // Handle mindmap "OLD = NEW" rename syntax
+      if (cmd.includes('=') && !cmd.includes('>') && mindmapData) {
+        const [oldText, newText] = cmd.split('=').map(s => s.trim());
+        if (oldText && newText) {
+          const success = await renameNode(oldText, newText);
+          if (!success) {
+            setPrompt('not found');
+            setTimeout(() => setPrompt('>'), 1500);
+          }
+          return;
+        }
+      }
+
+      // Handle mindmap "PARENT > CHILD" syntax
+      if (cmd.includes('>') && mindmapData) {
+        const [parent, child] = cmd.split('>').map(s => s.trim());
+        if (parent && child) {
+          const success = await addChildNode(parent, child);
+          if (!success) {
+            setPrompt('not found');
+            setTimeout(() => setPrompt('>'), 1500);
+          }
+          return;
+        }
+      }
+
+      const parts = cmd.trim().split(/\s+/);
+      const command = parts[0].toLowerCase();
+
+      // Mindmap clear command
+      if (command === 'clear' && mindmapData) {
+        await clearMindmap();
+        return;
+      }
+
+      switch (command) {
+        case 'animate':
+          if (parts[1]) {
+            currentAnimName = parts[1].toLowerCase();
+            loadAnimation(currentAnimName);
+          }
+          break;
+
+        case 'play':
+          if (anim) anim.play();
+          break;
+
+        case 'pause':
+          if (anim) anim.pause();
+          break;
+
+        case 'stop':
+          if (anim) anim.stop();
+          break;
+
+        case 'speed':
+          if (parts[1]) {
+            currentSpeed = parseFloat(parts[1]) || 1;
+            if (anim) anim.setSpeed(currentSpeed);
+          }
+          break;
+
+        case 'loop':
+          if (parts[1]) {
+            isLooping = parts[1].toLowerCase() === 'on';
+            if (anim) anim.loop = isLooping;
+          }
+          break;
+
+        case 'save':
+          if (parts[1] && currentAnimName) {
+            setPrompt('saving...');
+            const koreCmd = `animate ${currentAnimName}; save ${parts[1]}`;
+            const result = await ipcRenderer.invoke('kore-exec', koreCmd);
+            setPrompt(result.success ? 'saved!' : 'error');
+            setTimeout(() => setPrompt('>'), 2000);
+          }
+          break;
+
+        case 'help':
+          console.log('Commands: animate <name>, play, pause, stop, speed <n>, loop <on|off>, save <file.gif>');
+          break;
+      }
+    }
+
+    function setPrompt(text) {
+      document.getElementById('cli-prompt').textContent = text;
+    }
+
+    // CLI input handler
+    const cliInput = document.getElementById('cli-input');
+    cliInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const cmd = cliInput.value.trim();
+        if (cmd) {
+          executeCommand(cmd);
+          cliInput.value = '';
+        }
+      }
+    });
+
+    // Mindmap data
+    let mindmapData = null;
+
+    // Load mindmap SVG
+    async function loadMindmap() {
+      const svg = await ipcRenderer.invoke('get-mindmap-svg');
+      mindmapData = await ipcRenderer.invoke('get-mindmap-data');
+      if (svg) {
+        document.getElementById('lottie').style.display = 'none';
+        document.getElementById('mindmap').style.display = 'block';
+        document.getElementById('mindmap').innerHTML = svg;
+        document.getElementById('cli-input').placeholder = 'PARENT > CHILD | OLD = NEW';
+        return true;
+      }
+      return false;
+    }
+
+    // Find node by text in mindmap tree
+    function findNode(node, text) {
+      if (node.text.toLowerCase() === text.toLowerCase()) return node;
+      for (const child of node.children || []) {
+        const found = findNode(child, text);
+        if (found) return found;
+      }
+      return null;
+    }
+
+    // Add child to parent node
+    async function addChildNode(parentText, childText) {
+      if (!mindmapData) return false;
+
+      const parent = findNode(mindmapData, parentText);
+      if (!parent) {
+        console.log('Parent not found:', parentText);
+        return false;
+      }
+
+      // Add child
+      if (!parent.children) parent.children = [];
+      parent.children.push({ text: childText, children: [] });
+
+      // Re-render
+      const newSvg = await ipcRenderer.invoke('update-mindmap', mindmapData);
+      if (newSvg) {
+        document.getElementById('mindmap').innerHTML = newSvg;
+        return true;
+      }
+      return false;
+    }
+
+    // Clear mindmap (keep only root)
+    async function clearMindmap() {
+      if (!mindmapData) return false;
+
+      mindmapData.children = [];
+
+      const newSvg = await ipcRenderer.invoke('update-mindmap', mindmapData);
+      if (newSvg) {
+        document.getElementById('mindmap').innerHTML = newSvg;
+        return true;
+      }
+      return false;
+    }
+
+    // Rename node
+    async function renameNode(oldText, newText) {
+      if (!mindmapData) return false;
+
+      const node = findNode(mindmapData, oldText);
+      if (!node) {
+        console.log('Node not found:', oldText);
+        return false;
+      }
+
+      node.text = newText;
+
+      const newSvg = await ipcRenderer.invoke('update-mindmap', mindmapData);
+      if (newSvg) {
+        document.getElementById('mindmap').innerHTML = newSvg;
+        return true;
+      }
+      return false;
+    }
+
+    // Initial load
+    async function init() {
+      const isMindmap = await ipcRenderer.invoke('is-mindmap-mode');
+      if (isMindmap) {
+        await loadMindmap();
+      } else {
+        const animName = await ipcRenderer.invoke('get-animation-name');
+        currentAnimName = animName;
+        await loadAnimation(animName);
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

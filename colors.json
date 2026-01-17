@@ -1,0 +1,66 @@
+{
+  "name": "ByteByteGo Dark Theme",
+  "colors": {
+    "background": {
+      "primary": "#2B2B2B",
+      "secondary": "#3D3D3D",
+      "panel": "#454545"
+    },
+    "accent": {
+      "green": "#00D9A5",
+      "teal": "#4ECDC4",
+      "coral": "#FF6B6B",
+      "purple": "#D946EF",
+      "blue": "#5DADE2",
+      "yellow": "#F4D03F",
+      "orange": "#E67E22"
+    },
+    "text": {
+      "primary": "#FFFFFF",
+      "secondary": "#B0B0B0",
+      "muted": "#808080"
+    },
+    "border": {
+      "light": "#555555",
+      "accent": "#4ECDC4"
+    }
+  },
+  "rgb": {
+    "background": {
+      "primary": [43, 43, 43],
+      "secondary": [61, 61, 61]
+    },
+    "accent": {
+      "green": [0, 217, 165],
+      "teal": [78, 205, 196],
+      "coral": [255, 107, 107],
+      "purple": [217, 70, 239],
+      "blue": [93, 173, 226],
+      "yellow": [244, 208, 63],
+      "orange": [230, 126, 34]
+    },
+    "text": {
+      "primary": [255, 255, 255],
+      "secondary": [176, 176, 176]
+    }
+  },
+  "normalized": {
+    "background": {
+      "primary": [0.169, 0.169, 0.169],
+      "secondary": [0.239, 0.239, 0.239]
+    },
+    "accent": {
+      "green": [0.0, 0.851, 0.647],
+      "teal": [0.306, 0.804, 0.769],
+      "coral": [1.0, 0.420, 0.420],
+      "purple": [0.851, 0.275, 0.937],
+      "blue": [0.365, 0.678, 0.886],
+      "yellow": [0.957, 0.816, 0.247],
+      "orange": [0.902, 0.494, 0.133]
+    },
+    "text": {
+      "primary": [1.0, 1.0, 1.0],
+      "secondary": [0.690, 0.690, 0.690]
+    }
+  }
+}
